@@ -1,6 +1,6 @@
 let promise = new Promise((resolve, reject) => {
     if (Math.random() < 0.5) {
-        return reject("실패")
+        return reject("false")
     }
     resolve(10)
 })
