@@ -1,7 +1,10 @@
-let a = 10;
+let promise = new Promise((resolve, reject) => {
+    if (Math.random() < 0.5) {
+        return reject("실패")
+    }
+    resolve(10)
+})
 
-setTimeout(function callback() {
-    console.log("a : ", a)
-}, 3000);
-
-console.log("Finished");
+promise.then((data) => {
+    console.log(data)
+})
