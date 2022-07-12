@@ -1,0 +1,19 @@
+{
+  "name": "ai-yanjae-hub-and-elice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice.git"
+  },
+  "author": "Hyyena",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/issues"
+  },
+  "homepage": "https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice#readme"
+}
