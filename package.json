@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/issues"
   },
-  "homepage": "https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice#readme"
+  "homepage": "https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice#readme",
+  "dependencies": {
+    "yarn": "^1.22.19"
+  }
 }
