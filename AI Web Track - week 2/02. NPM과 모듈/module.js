@@ -5,5 +5,5 @@ const nationality = "korea";
 module.exports = {
     name,
     age,
-    nationality
+    nationalit
 };

@@ -11,5 +11,11 @@
   "dependencies": {
     "@vue/cli": "^5.0.8",
     "yarn": "^1.22.19"
+  },
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.2.0"
   }
 }
