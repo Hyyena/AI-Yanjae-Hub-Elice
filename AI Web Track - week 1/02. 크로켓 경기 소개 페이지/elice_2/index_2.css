@@ -278,17 +278,20 @@ section#photo {
 }
 
 #photo .slide:nth-child(1) {
-    background: url("img/click1.jpg") no-repeat center;
+    background: url("https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/blob/master/AI%20Web%20Track%20-%20week%201/02.%20%ED%81%AC%EB%A1%9C%EC%BC%93%20%EA%B2%BD%EA%B8%B0%20%EC%86%8C%EA%B0%9C%20%ED%8E%98%EC%9D%B4%EC%A7%80/elice_2/img/click1.jpg?raw=true")
+        no-repeat center;
     background-size: cover;
 }
 
 #photo .slide:nth-child(2) {
-    background: url("img/click2.jpg") no-repeat center;
+    background: url("https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/blob/master/AI%20Web%20Track%20-%20week%201/02.%20%ED%81%AC%EB%A1%9C%EC%BC%93%20%EA%B2%BD%EA%B8%B0%20%EC%86%8C%EA%B0%9C%20%ED%8E%98%EC%9D%B4%EC%A7%80/elice_2/img/click2.jpg?raw=true")
+        no-repeat center;
     background-size: cover;
 }
 
 #photo .slide:nth-child(3) {
-    background: url("img/click3.jpg") no-repeat center;
+    background: url("https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/blob/master/AI%20Web%20Track%20-%20week%201/02.%20%ED%81%AC%EB%A1%9C%EC%BC%93%20%EA%B2%BD%EA%B8%B0%20%EC%86%8C%EA%B0%9C%20%ED%8E%98%EC%9D%B4%EC%A7%80/elice_2/img/click3.jpg?raw=true")
+        no-repeat center;
     background-size: cover;
 }
 
@@ -301,7 +304,7 @@ section#photo {
 
     width: 22px;
     height: 22px;
-    background: url("img/arrow-left.png");
+    background: url("https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/blob/master/AI%20Web%20Track%20-%20week%201/02.%20%ED%81%AC%EB%A1%9C%EC%BC%93%20%EA%B2%BD%EA%B8%B0%20%EC%86%8C%EA%B0%9C%20%ED%8E%98%EC%9D%B4%EC%A7%80/elice_2/img/arrow-left.png?raw=true");
 
     left: 20px;
 
@@ -313,7 +316,7 @@ section#photo {
 
     width: 22px;
     height: 22px;
-    background: url("img/arrow-right.png");
+    background: url("https://github.com/Hyyena/AI-Yanjae-Hub-and-Elice/blob/master/AI%20Web%20Track%20-%20week%201/02.%20%ED%81%AC%EB%A1%9C%EC%BC%93%20%EA%B2%BD%EA%B8%B0%20%EC%86%8C%EA%B0%9C%20%ED%8E%98%EC%9D%B4%EC%A7%80/elice_2/img/arrow-right.png?raw=true");
 
     right: 20px;
 
