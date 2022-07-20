@@ -1,7 +1,7 @@
 $(document).ready(() => {
     let header =
     `<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" style="user-select: auto;">
-    <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" style="user-select: auto;">
+    <a href="/view/index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none" style="user-select: auto;">
         <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap" style="user-select: auto;">
             <img src ="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"></img>
         </svg>
@@ -15,8 +15,8 @@ $(document).ready(() => {
     </ul>
 
     <div class="col-md-3 text-end" style="user-select: auto;">
-        <button type="button" class="btn btn-outline-primary me-2" style="user-select: auto;">Login</button>
-        <button type="button" class="btn btn-primary" style="user-select: auto;">Sign-up</button>
+        <button type="button" class="btn btn-outline-primary me-2" style="user-select: auto;" onclick="location.href='/view/user/login.html'">Login</button>
+        <button type="button" class="btn btn-primary" style="user-select: auto;" onclick="location.href='/view/user/signUp.html'">Sign Up</button>
     </div>
     </header>`;
 
