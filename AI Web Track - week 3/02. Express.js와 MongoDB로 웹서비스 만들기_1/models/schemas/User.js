@@ -4,8 +4,9 @@ const shortId = require("./type/ShortId");
 module.exports = new Schema(
     {
         shortId,
-        title: String,
-        content: String,
+        email: String,
+        password: String,
+        name: String,
     },
     {
         timestamps: true,
