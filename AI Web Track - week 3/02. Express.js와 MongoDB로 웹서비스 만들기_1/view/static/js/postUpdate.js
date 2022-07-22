@@ -7,6 +7,9 @@ $(document).ready(() => {
     $.ajax({
         type: "GET",
         url: `http://localhost:3030/posts/${shortId}/find`,
+        headers: {
+            accessToken: $.cookie("accessToken"),
+        },
         success: (res) => {
             // console.log(res);
             $("#title").val(res.title);
@@ -35,6 +38,9 @@ const updatePost = () => {
         type: "POST",
         url: `http://localhost:3030/posts/${shortId}/update`,
         data: formData,
+        headers: {
+            accessToken: $.cookie("accessToken"),
+        },
         success: (res) => {
             // console.log(res);
             alert(res.result);

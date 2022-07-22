@@ -1,20 +1,25 @@
 const { Router } = require("express");
 const { Post } = require("./../models");
-const { asyncHandler } = require("./../utils/asyncHandler");
+const asyncHandler = require("./../utils/asyncHandler");
+const { User } = require("./../models");
 
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).populate("author");
     res.json(posts);
 });
 
 router.post("/", async (req, res, next) => {
-    const { title, content } = req.body;
+    const { title, content, email } = req.body;
+    console.log(title, content, email);
     try {
+        const authData = await User.findOne({ email });
+
         await Post.create({
             title,
             content,
+            author: authData,
         });
 
         res.json({

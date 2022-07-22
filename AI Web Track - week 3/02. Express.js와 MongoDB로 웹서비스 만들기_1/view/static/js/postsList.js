@@ -8,32 +8,52 @@ const getList = () => {
     $.ajax({
         type: "GET",
         url: "http://localhost:3030/posts/",
+        headers: {
+            accessToken: $.cookie("accessToken"),
+        },
         success: (res) => {
+            console.log(res);
             res.map((it, index) => {
                 // console.log(it);
                 // console.log(index);
-                let listData = `<tr>
-                <th scope="row">${index + 1}</th>
-                <td>${it.title}</td>
-                <td>Hyyena</td>
-                <td>
-                    <button type="button"
-                    class="btn btn-outline-warning btn-sm"
-                    onclick="updatePost('${it.shortId}')"
-                    >
-                        update
-                    </button>
-                    <button type="button"
-                    class="btn btn-outline-danger btn-sm"
-                    onclick="deletePost('${it.shortId}')"
-                    >
-                        delete
-                    </button>
-                </td>
-                </tr>`;
+                let listData;
+                if (sessionStorage.getItem("email") == it.author.email) {
+                    listData = `
+                    <tr>
+                        <th scope="row">${index + 1}</th>
+                        <td>${it.title}</td>
+                        <td>${it.author.name}</td>
+                        <td>
+                            <button type="button"
+                            class="btn btn-outline-warning btn-sm"
+                            onclick="updatePost('${it.shortId}')"
+                            >
+                                update
+                            </button>
+                            <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            onclick="deletePost('${it.shortId}')"
+                            >
+                                delete
+                            </button>
+                        </td>
+                    </tr>`;
+                } else {
+                    listData = `
+                    <tr>
+                        <th scope="row">${index + 1}</th>
+                        <td>${it.title}</td>
+                        <td>${it.author.name}</td>
+                        <td></td>
+                    </tr>`;
+                }
 
                 $(".postsList").append(listData);
             });
+        },
+        error: (res) => {
+            alert(res.responseJSON.message);
+            location.href = "/view/user/login.html";
         },
     });
 };
@@ -43,6 +63,9 @@ const deletePost = (shortId) => {
     $.ajax({
         type: "GET",
         url: `http://localhost:3030/posts/${shortId}/delete`,
+        headers: {
+            accessToken: $.cookie("accessToken"),
+        },
         success: (res) => {
             alert(res.result);
             getList();

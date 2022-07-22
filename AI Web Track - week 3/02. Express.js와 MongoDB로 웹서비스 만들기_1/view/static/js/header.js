@@ -41,7 +41,7 @@ $(document).ready(() => {
     </header>`;
 
     let status = $.cookie("accessToken");
-    console.log(status);
+    // console.log(status);
 
     if (status) {
         $(".container").prepend(yesHeader);

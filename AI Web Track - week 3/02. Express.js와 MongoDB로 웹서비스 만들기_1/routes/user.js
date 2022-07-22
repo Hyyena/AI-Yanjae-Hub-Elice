@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const jwtConfig = require("./../config/jwtConfig");
+const nodeMailer = require("nodemailer");
 
 router.post(
     "/signUp",
@@ -92,6 +93,61 @@ router.post(
         );
     })
 );
+
+router.post(
+    "/find/password",
+    asyncHandler(async (req, res, next) => {
+        let { email } = req.body;
+        let user = await User.findOne({ email });
+        let myEmail = "sjtxm123@gmail.com";
+
+        let transporter = nodeMailer.createTransport({
+            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false,
+            auth: {
+                user: myEmail,
+                pass: "txkrpfnvnbaonznx",
+            },
+        });
+
+        const randomPassword = randomPw();
+        const hashRandomPassword = passwordHash(randomPassword);
+
+        const checkEmail = await User.findOne({ email });
+        if (checkEmail.status !== null || checkEmail.status !== undefined) {
+            if (checkEmail.status === true) {
+                console.log("비밀번호 재생성 페이지로 리다이렉트");
+            }
+        }
+
+        await User.findOneAndUpdate(
+            {
+                shortId: user.shortId,
+            },
+            {
+                password: hashRandomPassword,
+            }
+        );
+
+        let info = await transporter.sendMail({
+            from: `"Admin" <${myEmail}>`,
+            to: user.email,
+            subject: "Rest Password By Admin",
+            html: `<b>Password : ${randomPassword}</b>`,
+        });
+
+        console.log(info.messageId);
+        res.json({ result: "이메일 전송 완료" });
+    })
+);
+
+const randomPw = () => {
+    return Math.floor(Math.random() * 10 ** 8)
+        .toString()
+        .padStart("0", 8);
+};
 
 const passwordHash = (password) => {
     return crypto.createHash("sha1").update(password).digest("hex");

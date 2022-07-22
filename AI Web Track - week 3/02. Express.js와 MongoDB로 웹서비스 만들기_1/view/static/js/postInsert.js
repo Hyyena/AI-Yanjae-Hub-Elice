@@ -14,10 +14,16 @@ const insertPost = () => {
     // form 태그 내의 input 값을 자동으로 읽어와 queryString으로 변경
     let formData = $("#insertForm").serialize();
 
+    formData += "&email=" + sessionStorage.getItem("email");
+
+    // 게시글 작성
     $.ajax({
         type: "POST",
         url: "http://localhost:3030/posts/",
         data: formData,
+        headers: {
+            accessToken: $.cookie("accessToken"),
+        },
         success: (res) => {
             console.log(res);
             alert(res.result);

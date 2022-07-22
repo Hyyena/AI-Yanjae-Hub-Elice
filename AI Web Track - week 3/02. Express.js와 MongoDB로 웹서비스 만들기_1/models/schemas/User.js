@@ -7,6 +7,7 @@ module.exports = new Schema(
         email: String,
         password: String,
         name: String,
+        status: false,
     },
     {
         timestamps: true,
