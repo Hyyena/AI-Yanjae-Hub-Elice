@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: decimal-leading-zero;
+    text-decoration: none;
+    /* color: #333; */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#container {
+    padding: 30px 20px;
+    margin: 0 auto;
+    width: 500px;
+    background: #f0f0f0;
+}
+
+.btnChk {
+    cursor: pointer;
+}
+
+.btnDel {
+    cursor: pointer;
+}
+
+ol {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ol li.on {
+    background-color: #3cb371;
+}
