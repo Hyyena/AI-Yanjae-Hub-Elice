@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
+  const navigate = useNavigate();
+
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+
+  useEffect(() => {
+    if (cookies.userData === undefined) {
+      navigate("/");
+    }
+  }, [cookies]);
+
   return (
     <header>
       <div className="collapse bg-dark" id="navbarHeader">
@@ -33,19 +47,38 @@ const Header = () => {
                 </li>
               </ul>
               <h4 className="text-white">Info</h4>
-              <ul className="list-unstyled">
-                <li>
-                  <button
-                    className="btn btn-danger"
-                    style={{ marginBottom: "5%" }}
-                  >
-                    Log Out
-                  </button>
-                </li>
-                <li>
-                  <button className="btn btn-primary">Info</button>
-                </li>
-              </ul>
+              {cookies.userData ? (
+                <ul className="list-unstyled">
+                  <li>
+                    <button
+                      className="btn btn-danger"
+                      style={{ marginBottom: "5%" }}
+                      onClick={() => {
+                        removeCookie("userData", { path: "/" });
+                        navigate("/");
+                      }}
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                  <li>
+                    <button className="btn btn-primary">Info</button>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="list-unstyled">
+                  <li>
+                    <button
+                      className="btn btn-light"
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      Sign In
+                    </button>
+                  </li>
+                </ul>
+              )}
             </div>
           </div>
         </div>

@@ -61,7 +61,7 @@ const Login = () => {
             </p>
             <p>
               <button
-                className="btn btn-primary my-2 m-1"
+                className="btn btn-light my-2 m-1"
                 onClick={() => {
                   setView({
                     signIn: true,
@@ -69,10 +69,10 @@ const Login = () => {
                   });
                 }}
               >
-                Sign in
+                Sign In
               </button>
               <button
-                className="btn btn-secondary my-2 m-1"
+                className="btn btn-primary my-2 m-1"
                 onClick={() => {
                   setView({
                     signIn: false,
@@ -97,6 +97,7 @@ const Login = () => {
       {view.signUp ? (
         <SignUpForm
           signUpData={signUpData}
+          setSignUpData={setSignUpData}
           onChangeSignUpData={onChangeSignUpData}
         />
       ) : (
