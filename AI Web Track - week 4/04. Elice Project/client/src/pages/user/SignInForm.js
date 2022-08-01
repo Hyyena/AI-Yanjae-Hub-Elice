@@ -63,7 +63,7 @@ const SignInForm = ({ signInData, onChangeSignInData }) => {
               id="email"
               aria-describedby="emailHelp"
               onChange={onChangeSignInData}
-              value={signInData.email}
+              defaultValue={signInData.email}
             />
           </div>
           <div
@@ -79,7 +79,7 @@ const SignInForm = ({ signInData, onChangeSignInData }) => {
               name="password"
               id="password"
               onChange={onChangeSignInData}
-              value={signInData.password}
+              defaultValue={signInData.password}
             />
           </div>
           <div

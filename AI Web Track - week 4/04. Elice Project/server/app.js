@@ -13,11 +13,11 @@ const app = express();
 mongoose.connect("mongodb://localhost:27017/myApp");
 
 mongoose.connection.on("connected", () => {
-    console.log("DB Connected");
+  console.log("DB Connected");
 });
 
 mongoose.connection.on("error", (err) => {
-    console.log(err);
+  console.log(err);
 });
 
 app.use(cors());
@@ -31,5 +31,5 @@ app.use("/posts", authMiddleware, postsRouter);
 app.use("/user", userRouter);
 
 app.listen(8080, () => {
-    console.log("Server Staaaaaaaaaaaaaaart");
+  console.log("Server Staaaaaaaaaaaaaaart");
 });

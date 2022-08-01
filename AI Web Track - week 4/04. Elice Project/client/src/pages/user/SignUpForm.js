@@ -79,7 +79,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
               ref={emailRef}
               aria-describedby="emailHelp"
               onChange={onChangeSignUpData}
-              value={signUpData.email}
+              defaultValue={signUpData.email}
               required
             />
             <div
@@ -103,7 +103,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
               name="password"
               id="password"
               onChange={onChangeSignUpData}
-              value={signUpData.password}
+              defaultValue={signUpData.password}
               required
             />
           </div>
@@ -120,7 +120,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
               name="rePassword"
               id="rePassword"
               onChange={onChangeSignUpData}
-              value={signUpData.rePassword}
+              defaultValue={signUpData.rePassword}
               required
             />
           </div>
@@ -137,7 +137,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
               name="name"
               id="name"
               onChange={onChangeSignUpData}
-              value={signUpData.name}
+              defaultValue={signUpData.name}
               required
             />
           </div>

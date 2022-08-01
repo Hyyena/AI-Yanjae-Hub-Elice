@@ -1,13 +1,81 @@
+import port from "./../../data/port.json";
+import axios from "axios";
+import $ from "jquery";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+
 const Create = () => {
+  const navigate = useNavigate();
+
+  const [cookies, setCookies, removeCookies] = useCookies(["userData"]);
+
+  const [createReview, setCreateReview] = useState({
+    img: "",
+    title: "",
+    content: "",
+    email: cookies.userData.email,
+  });
+
+  useEffect(() => {
+    console.log(createReview);
+  }, [createReview]);
+
+  const onChagneCreateReview = (e) => {
+    setCreateReview({
+      ...createReview,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onClickCreateReviewButton = () => {
+    if (createReview.img === "") {
+      alert("이미지 경로를 입력해주세요.");
+      $("#img").focus();
+      return;
+    }
+
+    if (createReview.title === "") {
+      alert("제목을 입력해주세요.");
+      $("#title").focus();
+      return;
+    }
+
+    if (createReview.content === "") {
+      alert("내용을 입력해주세요.");
+      $("#content").focus();
+      return;
+    }
+
+    sendCreateReview()
+      .then((res) => {
+        console.log(res);
+        alert(res.data.result);
+        navigate("/review/list");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const sendCreateReview = async () => {
+    return await axios.post(`${port.url}/posts`, createReview, {
+      headers: {
+        accessToken: cookies.userData.accessToken,
+      },
+    });
+  };
+
   return (
     <div className="album">
       <div className="container">
         <div className="card mb-3">
           <div className="card-img-top" style={{ textAlign: "center" }}>
-            <img
-              src="https://search.pstatic.net/common?type=o&size=174x246&quality=100&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20220720_283%2F1658284839003UzxoT_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2"
-              alt="..."
-            />
+            {createReview.img !== "" ? (
+              <img src={createReview.img} alt="Movie" />
+            ) : (
+              <></>
+            )}
           </div>
           <div className="card-body">
             <h5 className="card-title">Movie Image</h5>
@@ -18,6 +86,7 @@ const Create = () => {
               name="img"
               id="img"
               placeholder="사진 URL을 입력해주세요."
+              onChange={onChagneCreateReview}
             />
             <p className="card-text">
               <small className="text-muted">url...</small>
@@ -34,6 +103,7 @@ const Create = () => {
             name="title"
             id="title"
             placeholder="제목을 입력해주세요."
+            onChange={onChagneCreateReview}
           />
         </div>
         <div className="mb-3">
@@ -46,10 +116,16 @@ const Create = () => {
             id="content"
             rows="3"
             placeholder="내용을 입력해주세요."
+            onChange={onChagneCreateReview}
           ></textarea>
         </div>
-        <button className="btn btn-primary" type="submit" style={{marginRight: "2%"}}>
-          Submit
+        <button
+          className="btn btn-primary"
+          type="submit"
+          style={{ marginRight: "2%" }}
+          onClick={onClickCreateReviewButton}
+        >
+          Create
         </button>
         <button className="btn btn-outline-danger" type="submit">
           Back

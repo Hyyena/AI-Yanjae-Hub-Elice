@@ -1,6 +1,94 @@
-import reviewData from "./data/review.json";
+// import reviewData from "./data/review.json";
+import port from "./data/port.json";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { setData } from "./app/reducer/Data";
 
 const Review = () => {
+  // aciton을 사용하기 위해 값을 보내주는 역할
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const [cookies, setCookies, removeCookies] = useCookies(["userData"]);
+
+  const [reviewData, setReviewData] = useState([]);
+
+  // 렌더링이 되었다면 한 번만 실행됨.
+  useEffect(() => {
+    getReviewData();
+  }, []);
+
+  const getReviewData = () => {
+    try {
+      axios
+        .get(`${port.url}/posts`, {
+          headers: {
+            accessToken: cookies.userData.accessToken,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setReviewData(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (e) {
+      navigate("/");
+    }
+  };
+
+  // ------------------------------Delete------------------------------
+  const deleteReview = async (shortId) => {
+    return await axios.get(`${port.url}/posts/${shortId}/delete`, {
+      headers: {
+        accessToken: cookies.userData.accessToken,
+      },
+    });
+  };
+
+  const onClickDeleteButton = (shortId) => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      // Yes
+      console.log(shortId);
+      deleteReview(shortId)
+        .then((res) => {
+          console.log(res);
+          let getNewDeleteAfterData = reviewData.filter(
+            (it) => it.shortId !== shortId,
+          );
+          setReviewData(getNewDeleteAfterData);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      // No
+      return;
+    }
+  };
+  // ------------------------------------------------------------------
+
+  // ------------------------------Update------------------------------
+  const onClickUpdateButton = (shortId) => {
+    dispatch(setData(shortId));
+    navigate(`/review/${shortId}/update`);
+  };
+  // ------------------------------------------------------------------
+
+  // ------------------------------Detail------------------------------
+  const onClickDetailButton = (shortId) => {
+    console.log(shortId);
+    navigate(`/review/${shortId}/detail`);
+  };
+  // ------------------------------------------------------------------
+
   return (
     <main>
       <section className="py-5 text-center container">
@@ -13,7 +101,12 @@ const Review = () => {
               삭제와 수정은 자유롭게 가능합니다.
             </p>
             <p>
-              <button className="btn btn-primary my-2 m-1">
+              <button
+                className="btn btn-primary my-2 m-1"
+                onClick={() => {
+                  navigate("/review/create");
+                }}
+              >
                 Create Review
               </button>
             </p>
@@ -38,25 +131,44 @@ const Review = () => {
                     />
                   </div>
                   <div className="card-body">
+                    <h5
+                      className="card-title"
+                      onClick={() => {
+                        onClickDetailButton(it.shortId);
+                      }}
+                    >
+                      {it.title}
+                    </h5>
                     <p className="card-text">
                       {it.content.substring(0, it.content.length / 2)}
-                      <a style={{ color: "green" }}>
-                        &nbsp;&nbsp;&nbsp;...상세보기
-                      </a>
+                      <p
+                        style={{ color: "green" }}
+                        onClick={() => {
+                          onClickDetailButton(it.shortId);
+                        }}
+                      >
+                        ...더보기
+                      </p>
                     </p>
                     <div className="d-flex justify-content-between align-items-center">
                       <div className="btn-group">
                         <button
                           type="button"
                           className="btn btn-sm btn-outline-secondary"
+                          onClick={() => {
+                            onClickUpdateButton(it.shortId);
+                          }}
                         >
-                          View
+                          Edit
                         </button>
                         <button
                           type="button"
-                          className="btn btn-sm btn-outline-secondary"
+                          className="btn btn-sm btn-outline-danger"
+                          onClick={() => {
+                            onClickDeleteButton(it.shortId);
+                          }}
                         >
-                          Edit
+                          Delete
                         </button>
                       </div>
                       <small className="text-muted">9 mins</small>
