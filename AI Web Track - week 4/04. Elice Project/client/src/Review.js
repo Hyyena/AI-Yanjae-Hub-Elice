@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { setData } from "./app/reducer/Data";
+// import { useDispatch } from "react-redux";
+// import { setData } from "./app/reducer/Data";
 
 const Review = () => {
   // aciton을 사용하기 위해 값을 보내주는 역할
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -19,22 +19,33 @@ const Review = () => {
 
   const [reviewData, setReviewData] = useState([]);
 
+  const [page, setPage] = useState({
+    page: 1, // 현재 보고 있는 페이지 번호
+    totalPage: 0, // 전체 페이지 수
+  });
+
   // 렌더링이 되었다면 한 번만 실행됨.
   useEffect(() => {
-    getReviewData();
+    getReviewData(page.page);
   }, []);
 
-  const getReviewData = () => {
+  const getReviewData = (page) => {
     try {
       axios
-        .get(`${port.url}/posts`, {
+        .get(`${port.url}/posts?page=${page}&perPage=6`, {
           headers: {
             accessToken: cookies.userData.accessToken,
           },
         })
         .then((res) => {
           console.log(res);
-          setReviewData(res.data);
+
+          setReviewData(res.data.posts);
+
+          setPage({
+            page: page,
+            totalPage: res.data.totalPage,
+          });
         })
         .catch((e) => {
           console.log(e);
@@ -42,6 +53,10 @@ const Review = () => {
     } catch (e) {
       navigate("/");
     }
+  };
+
+  const onClickPagination = (page) => {
+    getReviewData(page);
   };
 
   // ------------------------------Delete------------------------------
@@ -77,7 +92,7 @@ const Review = () => {
 
   // ------------------------------Update------------------------------
   const onClickUpdateButton = (shortId) => {
-    dispatch(setData(shortId));
+    // dispatch(setData(shortId));
     navigate(`/review/${shortId}/update`);
   };
   // ------------------------------------------------------------------
@@ -179,6 +194,80 @@ const Review = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <nav
+          aria-label="Page navigation example"
+          style={{ display: "inline-block" }}
+        >
+          <ul className="pagination">
+            {page.page - 1 < 1 ? (
+              <></>
+            ) : (
+              <>
+                <li className="page-item">
+                  <p
+                    className="page-link"
+                    aria-label="Previous"
+                    onClick={() => {
+                      onClickPagination(page.page - 1);
+                    }}
+                  >
+                    <span aria-hidden="true">&laquo;</span>
+                  </p>
+                </li>
+                <li className="page-item">
+                  <p
+                    className="page-link"
+                    onClick={() => {
+                      onClickPagination(page.page - 1);
+                    }}
+                  >
+                    {page.page - 1}
+                  </p>
+                </li>
+              </>
+            )}
+            <li className="page-item active">
+              <p
+                className="page-link"
+                onClick={() => {
+                  onClickPagination(page.page);
+                }}
+              >
+                {page.page}
+              </p>
+            </li>
+            {page.page + 1 > page.totalPage ? (
+              <></>
+            ) : (
+              <>
+                {" "}
+                <li className="page-item">
+                  <p
+                    className="page-link"
+                    onClick={() => {
+                      onClickPagination(page.page + 1);
+                    }}
+                  >
+                    {page.page + 1}
+                  </p>
+                </li>
+                <li className="page-item">
+                  <p
+                    className="page-link"
+                    aria-label="Next"
+                    onClick={() => {
+                      onClickPagination(page.page + 1);
+                    }}
+                  >
+                    <span aria-hidden="true">&raquo;</span>
+                  </p>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
       </div>
     </main>
   );

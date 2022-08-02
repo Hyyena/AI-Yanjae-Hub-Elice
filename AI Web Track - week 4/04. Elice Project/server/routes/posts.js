@@ -1,13 +1,42 @@
+const asyncHandler = require("./../utils/asyncHandler");
 const { Router } = require("express");
 const { Post } = require("./../models");
-const asyncHandler = require("./../utils/asyncHandler");
 const { User } = require("./../models");
 
 const router = Router();
 
+// 게시글 리스트
 router.get("/", async (req, res, next) => {
-  const posts = await Post.find({}).populate("author");
-  res.json(posts);
+  // const posts = await Post.find({}).populate("author");
+  // res.json(posts);
+
+  // let page = 1;
+  // let perPage = 6;
+
+  // page가 1보다 작다면 오류 처리
+  if (req.query.page < 1) {
+    next("Please enter a number greator than 1");
+    return;
+  }
+
+  // req.query.page가 "undefiend" or "null"이면 1을 넣어라. 즉, default = 1
+  const page = Number(req.query.page || 1);
+
+  // req.query.perPage가 "undefiend" or "null"이면 6을 넣어라. 즉, default = 6
+  const perPage = Number(req.query.perPage || 6);
+
+  const total = await Post.countDocuments({});
+
+  // 페이지네이션
+  const posts = await Post.find({})
+    .sort({ createdAt: -1 }) // 마지막으로 작성된 게시글을 첫 번째 인덱스로 가져옴
+    .skip(perPage * (page - 1)) // ex) 2 페이지라면 5번부터
+    .limit(perPage) //                 6개씩 가져옴
+    .populate("author");
+
+  const totalPage = Math.ceil(total / perPage);
+
+  res.json({ posts, totalPage });
 });
 
 router.post("/", async (req, res, next) => {

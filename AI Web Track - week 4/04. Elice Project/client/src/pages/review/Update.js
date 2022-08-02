@@ -1,12 +1,15 @@
+import $ from "jquery";
 import port from "./../../data/port.json";
 import axios from "axios";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Update = () => {
+  const navigate = useNavigate();
+
   const params = useParams();
 
   const [updateData, setUpdateData] = useState({});
@@ -37,6 +40,48 @@ const Update = () => {
       ...updateData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const onClickChangeUpdateData = () => {
+    if (updateData.img === "") {
+      alert("이미지 경로를 입력해주세요.");
+      $("#img").focus();
+      return;
+    }
+
+    if (updateData.title === "") {
+      alert("제목을 입력해주세요.");
+      $("#title").focus();
+      return;
+    }
+
+    if (updateData.content === "") {
+      alert("내용을 입력해주세요.");
+      $("#content").focus();
+      return;
+    }
+
+    sendUpdateData()
+      .then((res) => {
+        console.log(res);
+        alert(res.data.result);
+        navigate("/review/list");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const sendUpdateData = async () => {
+    return await axios.post(
+      `${port.url}/posts/${params.id}/update`,
+      updateData,
+      {
+        headers: {
+          accessToken: cookies.userData.accessToken,
+        },
+      },
+    );
   };
 
   return (
@@ -97,6 +142,7 @@ const Update = () => {
           className="btn btn-warning"
           type="submit"
           style={{ marginRight: "2%" }}
+          onClick={onClickChangeUpdateData}
         >
           Edit
         </button>
