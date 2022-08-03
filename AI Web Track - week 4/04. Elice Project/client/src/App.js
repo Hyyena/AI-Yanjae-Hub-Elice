@@ -7,6 +7,10 @@ import ReviewCreate from "./ReviewCreate";
 import ReviewDetail from "./ReviewDetail";
 import ReviewUpdate from "./ReviewUpdate";
 
+// Social
+import KakaoCallBack from "./pages/user/kakao/KakaoCallBack";
+import SocialSignUp from "./pages/user/SocialSignUp";
+
 // Redux
 // import Store from "./app/Store";
 // import { Provider } from "react-redux";
@@ -19,6 +23,10 @@ function App() {
       <Routes>
         {/* url -> http://localhost:3002/ */}
         <Route path="/" element={<Main />} />
+        <Route path="oauth">
+          <Route path="kakao/callback" element={<KakaoCallBack />} />
+          <Route path="signup" element={<SocialSignUp />} />
+        </Route>
         {/* url -> http://localhost:3002/review */}
         <Route path="review">
           {/* url -> http://localhost:3002/review/list */}

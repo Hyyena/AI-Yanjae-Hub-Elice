@@ -15,6 +15,13 @@ const Header = () => {
     }
   }, [cookies]);
 
+  //---------------------------------- kakao oauth -----------------------------------
+  const REST_API_KEY = "2a4b9060f87455c878ed43fd10976ee1";
+  const REDIRECT_URI = "http://localhost:3004/oauth/kakao/callback";
+
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  //----------------------------------------------------------------------------------
+
   return (
     <header>
       <div className="collapse bg-dark" id="navbarHeader">
@@ -64,8 +71,10 @@ const Header = () => {
               ) : (
                 <ul className="list-unstyled">
                   <li style={{ marginBottom: "5%" }}>
-                    {/* <img src={"/img/kakao_login_medium_narrow.png"} alt="..." /> */}
-                    <img src={kakaoLoginButtonImg} alt="..." width={170} />
+                    <a href={KAKAO_AUTH_URI}>
+                      {/* <img src={"/img/kakao_login_medium_narrow.png"} alt="..." /> */}
+                      <img src={kakaoLoginButtonImg} alt="..." width={170} />
+                    </a>
                   </li>
                   <li>
                     <button
