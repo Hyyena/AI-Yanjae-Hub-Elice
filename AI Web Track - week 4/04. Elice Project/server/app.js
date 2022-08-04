@@ -4,6 +4,9 @@ const postsRouter = require("./routes/posts");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 
+// ML
+const ML = require("./routes/ML");
+
 const authMiddleware = require("./utils/authMiddleware");
 
 const cors = require("cors");
@@ -25,6 +28,9 @@ mongoose.connection.on("error", (err) => {
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// ML 라우팅
+app.use("/ml", ML);
 
 // auth url 경로 라우팅
 app.use("/auth", authRouter);
